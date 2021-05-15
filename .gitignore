@@ -1,0 +1,22 @@
+data/full-simplified-beard.ndjson
+data/full-simplified-birthday cake.ndjson
+data/full-simplified-face.ndjson
+data/full-simplified-rain.ndjson
+data/full-simplified-sandwich.ndjson
+data/full-simplified-yoga.ndjson
+data/full-simplified-The Mona Lisa.ndjson
+
+data/out/0_preprocessed_data/beard.npy
+data/out/0_preprocessed_data/birthday_cake.npy
+data/out/0_preprocessed_data/face.npy
+data/out/0_preprocessed_data/rain.npy
+data/out/0_preprocessed_data/sandwich.npy
+data/out/0_preprocessed_data/yoga.npy
+data/out/0_preprocessed_data/The_Mona_Lisa.npy
+data/out/0_preprocessed_data/ice_cream.npy
+data/out/0_preprocessed_data/snowflake.npy
+data/out/0_preprocessed_data/house.npy
+
+venv_quickdraw/
+add_venv.sh
+testing/

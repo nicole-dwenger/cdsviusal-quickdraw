@@ -1,0 +1,17 @@
+Classification report for model trained with 5 epochs and batchsize of 40:
+               precision    recall  f1-score   support
+
+The_Mona_Lisa       0.92      0.96      0.94      1156
+        beard       0.88      0.83      0.86      1171
+birthday_cake       0.87      0.95      0.91      1215
+         face       0.89      0.96      0.92      1217
+        house       0.94      0.97      0.95      1226
+    ice_cream       0.98      0.92      0.95      1189
+         rain       0.96      0.96      0.96      1239
+     sandwich       0.95      0.92      0.93      1226
+    snowflake       0.96      0.95      0.95      1195
+         yoga       0.88      0.79      0.83      1166
+
+     accuracy                           0.92     12000
+    macro avg       0.92      0.92      0.92     12000
+ weighted avg       0.92      0.92      0.92     12000

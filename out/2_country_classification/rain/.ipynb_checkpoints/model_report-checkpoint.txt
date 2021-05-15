@@ -1,0 +1,10 @@
+Classification report for model trained with 20 epochs and batchsize of 40:
+              precision    recall  f1-score   support
+
+          DE       0.40      0.53      0.46       409
+          RU       0.53      0.32      0.40       401
+          US       0.42      0.44      0.43       390
+
+    accuracy                           0.43      1200
+   macro avg       0.45      0.43      0.43      1200
+weighted avg       0.45      0.43      0.43      1200
