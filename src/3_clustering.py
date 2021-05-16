@@ -4,18 +4,19 @@
 Generating k clusters of images beloning to one word, using KMeans algorithm of features extracted from VGG16.  
 
 For a preprocessed dataframe of a word (containing 6000 drawings)
-- For 32x32 imgs in dataframe: load images, and preprocesses to fit to VGG16
-- Prepare model: load VGG16 without top layers, for input size of 32x32x3
-- Extract features: predict features of each image using VGG16, returns 512 long feacture vector for each image
-- Generate k clusters using extracted features, and KMeans algorithm
-- Save an image of 20 example drawings for each cluster
+  - For 32x32 imgs in dataframe: load images, and preprocesses to fit to VGG16
+  - Prepare model: load VGG16 without top layers, for input size of 32x32x3
+  - Extract features: predict features of each image using VGG16, returns 512 long feacture vector for each image
+  - Generate k clusters using extracted features, and KMeans algorithm
+  - Save an image of 20 example drawings for each cluster
 
 Input:
-- -w, --word, str, required, examples: "yoga", "The_Mona_Lisa" (should correspond to filename in out/0_preprocessed_data/)
-- -n, --n_clusters, int, optional, default: 5, number of clusters to generate
+  - -w, --word, str, required, examples: "yoga", "The_Mona_Lisa" 
+    (should correspond to filename in out/0_preprocessed_data/)
+  - -n, --n_clusters, int, optional, default: 5, number of clusters to generate
 
 Output saved in ../out/3_clustering/:
-- {word}_{n_clusters}_clusters.png
+  - {word}_{n_clusters}_clusters.png
 """
 
 # LIBRARIES ---------------------------------------------------

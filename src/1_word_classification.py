@@ -5,21 +5,21 @@ Classification of words of preprocessed QuickDraw sketches using transfer learni
 
 For all preprocessed files in out/0_preprocessed_data/
   - Preprocess X (images in 32x32x3), and y (labels, words): normalise images, binarize labels
-  - Split X and y into train/test, with 80/20 splot
+  - Split X and y into train/test, with 80/20 split
   - Prepare VGG16: remove fully connected layers at the top, append flattening, dense and output layer
   - Train appended layers to classify words of sketches, with input batch size and epochs
   - Evaluate model by predicting labels of test data
   - Save model information, model history and classification report
 
 Input:
-- -b, --batch_size, int, optional, default: 40, size of batches to train model on
-- -e, --epoch, int, optional, defualt: 5, number of epochs to train model for 
+  - -b, --batch_size, int, optional, default: 40, size of batches to train model on
+  - -e, --epoch, int, optional, defualt: 5, number of epochs to train model for 
 
 Output saved in ../out/1_word_classification/:
-- model_summary.txt: summary of model architecture
-- model_plot.png: plot of model architecture
-- model_history.png: plot of model training history
-- model_report.txt: classification report of model
+  - model_summary.txt: summary of model architecture
+  - model_plot.png: plot of model architecture
+  - model_history.png: plot of model training history
+  - model_report.txt: classification report of model
 """
 
 
@@ -39,7 +39,6 @@ from utils.quickdraw_utils import (npy_to_df, prepare_data,
                                    save_model_info, save_model_history, save_model_report)
 
 # ML tools
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
 # Tensorflow Keras, VGG16
@@ -77,7 +76,7 @@ def main():
     
     # --- DATA PREPARATION ---
     
-    print("\n[INFO] Initialising classification of words of sketches using the pretrained model VGG16!")
+    print("\n[INFO] Initialising classification of words of sketches using the pretrained model VGG16.")
     
     # Create target dataframe for data, based on preprocessed .npy files
     filepaths = glob.glob(os.path.join("..", "out", "0_preprocessed_data", "*.npy"))
@@ -91,7 +90,7 @@ def main():
     
     # --- MODEL PREPARATION ---
     
-    print("[INFO] Preparing VGG16 and adjusting fully connected layers!")
+    print("[INFO] Preparing VGG16 and adjusting fully connected layers.")
     
     # Load VGG16 without fully connected layers and for image size of 32x32x3
     model = VGG16(include_top=False, pooling='avg', input_shape=(32, 32, 3))
@@ -116,7 +115,7 @@ def main():
     
     # --- MODEL TRAINING AND EVALUATION ---
     
-    print(f"[INFO] Training and evaluating model with batch size: {batch_size}, epochs: {epochs}!")
+    print(f"[INFO] Training and evaluating model with batch size: {batch_size}, epochs: {epochs}.")
     
     # Train the model to classify words
     history = model.fit(X_train, y_train, 
@@ -146,7 +145,7 @@ def main():
     print(report)
     
     # Print message
-    print(f"\n[INFO] All done! Output is saved in {output_directory}")
+    print(f"\n[INFO] All done! Output is saved in {output_directory}.")
 
    
 if __name__=="__main__":

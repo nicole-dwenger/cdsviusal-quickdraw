@@ -46,13 +46,11 @@ from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
 def strokes_to_img(strokes, output_size):
     """
     Turn drawing strokes into image with strokes coloured by time of occuance.
-    
     Input: 
-    - strokes: List of strokes of quickdraw images
-    - ouput_size: output size of image
-    
+      - strokes: List of strokes of quickdraw images
+      - ouput_size: output size of image    
     Returns:
-    - img: with 3 colour channels, and sized to output size
+      - img: with 3 colour channels, and sized to output size
     """
     # Create empty array of original image size (0 = black)
     img = np.zeros((256, 256, 1), np.uint8)
@@ -83,13 +81,11 @@ def strokes_to_img(strokes, output_size):
 def npy_to_df(filepaths, columns):
     """
     Read one or more .npy file(s) and turn into one dataframe
-    
     Input:
-    - filepaths: List of filepath(s)
-    - columns: column names of output dataframe
-    
+      - filepaths: List of filepath(s)
+      - columns: column names of output dataframe
     Returns:
-    - dataframe, with column names and all .npy files concatenated
+      - dataframe, with column names and all .npy files concatenated
     """
     # Create target dataframe
     df = pd.DataFrame(columns = columns)
@@ -108,14 +104,12 @@ def npy_to_df(filepaths, columns):
 def prepare_data(df, img_type, label_type):
     """
     Preprocess images and labels as model input
-    
     Input:
-    - df: processed dataframe with images and relevant labels
-    - img_type: "img_32" or "img_224"
-    - label_type: "word" for word classifier or "country" for country classifier
-    
+      - df: processed dataframe with images and relevant labels
+      - img_type: "img_32" or "img_224"
+      - label_type: "word" for word classifier or "country" for country classifier
     Returns:
-    - 
+      - X_train, X_test, y_train, y_test, unique, sorted label_names
     """
     # From df get images and labels and turn into array
     X_array = np.array(df[img_type].tolist())
@@ -141,6 +135,10 @@ def prepare_data(df, img_type, label_type):
 def unique_path(filepath):
     """
     Create unique filename by enumerating if path exists already 
+    Input:
+      - desired fielpath
+    Returns:
+      - filpath, enumerated if it exists already
     """ 
     # If the path does not exist
     if not os.path.exists(filepath):
@@ -163,13 +161,13 @@ def unique_path(filepath):
         return new_path
     
 def save_model_info(model, output_directory, filename_summary, filename_plot):
-    """Save model summary in .txt file and plot of model in .png
-    
+    """
+    Save model summary in .txt file and plot of model in .png
     Input:
-    - model: compiled model
-    - output_directory: path to output directory
-    - filename_summary: name of file to save summary in
-    - filename_plot: name of file to save visualisation of model
+      - model: compiled model
+      - output_directory: path to output directory
+      - filename_summary: name of file to save summary in
+      - filename_plot: name of file to save visualisation of model
     """
     # Define path fand filename for model summary
     out_summary = unique_path(os.path.join(output_directory, filename_summary))
@@ -184,13 +182,13 @@ def save_model_info(model, output_directory, filename_summary, filename_plot):
     plot_model(model, to_file = out_plot, show_shapes = True, show_layer_names = True)
      
 def save_model_history(history, epochs, output_directory, filename):
-    """Plotting the model history, i.e. loss/accuracy of the model during training
-    
+    """
+    Plotting the model history, i.e. loss/accuracy of the model during training
     Input: 
-    - history: model history
-    - epochs: number of epochs the model was trained on 
-    - output_directory: desired output directory
-    - filename: name of file to save history in
+      - history: model history
+      - epochs: number of epochs the model was trained on 
+      - output_directory: desired output directory
+      - filename: name of file to save history in
     """
     # Define output path
     out_history = unique_path(os.path.join(output_directory, filename))
@@ -210,12 +208,12 @@ def save_model_history(history, epochs, output_directory, filename):
     plt.savefig(out_history)
 
 def save_model_report(report, epochs, batch_size, output_directory, filename):
-    """Save report to output directory
-    
+    """
+    Save report to output directory
     Input: 
-    - report: model classifcation report
-    - output_directory: final output_directory
-    - filename: name of file to save report in
+      - report: model classifcation report
+      - output_directory: final output_directory
+      - filename: name of file to save report in
     """
     # Define output path and file for report
     report_out = unique_path(os.path.join(output_directory, filename))
@@ -234,7 +232,7 @@ def extract_features(image, model):
       - img: image, size should be as input shape of model
       - model: loaded, pretrained model, here: vgg16
     Returns: 
-      - Flattened, normalised features of the image
+      - flattened, normalised features of the image
     """
     # Turn image into array
     img = np.array(image)
