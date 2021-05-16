@@ -95,8 +95,9 @@ def main():
     
     # --- OUTPUT ---
     
-    # Save images of clusters in output directory
+    # Define output path for image
     output_path = os.path.join("..", "out", "3_clustering", f"{word}_{n_clusters}_clusters.png")
+    # Generate and save image of 20 examples for each cluster
     save_cluster_drawings(df, n_clusters, output_path)
         
     # Print message

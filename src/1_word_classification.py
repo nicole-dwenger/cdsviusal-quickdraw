@@ -126,6 +126,7 @@ def main():
     
     # Evaluate the model by generating predictions for test data
     predictions = model.predict(X_test, batch_size=batch_size)
+    # Get classification report with correct label names
     report = classification_report(y_test.argmax(axis=1), 
                                    predictions.argmax(axis=1), 
                                    target_names=label_names)
