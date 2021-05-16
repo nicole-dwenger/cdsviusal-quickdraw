@@ -44,7 +44,7 @@ For this unsupervised, exploratory task, pre-trained weights of VGG16 were used 
 
 
 ## Repository Structure
-```bash
+```
 |-- data/                              # Directory of raw data, only containing sample of files
     |-- full-simplified-beard.ndjson   # Simplified drawing file, one for each word, only three examples here
     |-- full-simplified-face.ndjson
@@ -241,17 +241,17 @@ Images were clustered into 5 clusters using features extracted from VGG16. Plots
 
 In the future, it should be considered, to explore a range of possible values for k, and rather than sampling images for each cluster, plotting those which are closest to the centroid of each cluster. What these plots indicate, is also that the drawings are very noisy, which might have contributed to the fact that they could not be classified by their country. Further implications are discussed below.
 
-__Clusters for *rain*:__
+__Clusters for *rain*:__ rain ...
 
-0: rain as lines - 1: rain as more lines - 2: rain with clouds at the top - 3: rain with bigger clouds - 4: rain with clouds and big drops
+0: ... as lines, 1: ... as more lines, 2: .. with clouds at the top, 3: ... with bigger clouds, 4: ... with clouds and big drops
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/rain_5_clusters.png)
 
-__Clusters for *snowflake*:__
+__Clusters for *snowflake*:__ snowflake ...
 
-0: simple line snowflake - 1: snowflake as blob - 2: simple line snowflake at the top - 3: reduced line snowflake - 4: decorated line snowflake
+0: ... as simple lines, 1: ... as blob - 2: ... as lines at the top, 3: ... as fewer lines - 4: ... as decorated lines
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/snowflake_5_clusters.png)
 
-__Clusters for *yoga*:__
+__Clusters for *yoga*:__ 
 
 0: cheating with writing - 1: yoga with spread out legs/arms - 2: standing yoga - 3: yoga on mat - 4: cut off drawing
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/yoga_5_clusters.png)
