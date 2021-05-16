@@ -6,11 +6,11 @@
 >This project is the self-assigned project of the course Visual Analytics. 
 
 
-The aim of this project was to investigate sketches that were collected by the QuickDraw application from Google. In the [QuickDraw application](https://quickdraw.withgoogle.com), users are prompted with a word and asked to draw the given concept. While drawing, Google’s classification model tries to guess the corresponding word. These quick drawings might provide insights into how people represent words or concepts in a very simple format. Many approaches have been taken to classify the words of drawings. This project aimed to go beyond this classification task, by also taking a cultural approach. Specifically, it was investigated whether it is possible to predict the country a drawing came from. People from different countries might have different representations of e.g beard, sandwich or rain as a consequence of their surrounding and cultural background. Further, an exploratory and unsupervised approach was taken to investigate, whether any other clusters can be identified within the drawings of a word. Thus, the following questions were posed: 
+The aim of this project was to investigate sketches that were collected by the QuickDraw application from Google. In the [QuickDraw application](https://quickdraw.withgoogle.com), users are prompted with a word and asked to draw the given concept. While drawing, Google’s classification model tries to guess the corresponding word. These quick drawings might provide insights into how people represent words or concepts in a very simple format. Many approaches have been taken to classify the words of drawings. This project aimed to go beyond this classification task, by also taking a cultural approach. Specifically, it was investigated whether it is possible to predict the country a drawing came from. People from different countries might have different representations of e.g beard, sandwich or rain as a consequence of their surrounding and cultural background. Further, an exploratory and unsupervised approach was taken to investigate, whether any other clusters can be identified within the drawings of a word, as people across cultures may have different ways of representing words visually. Thus, the following questions were posed: 
 
 1. Can the word of a drawings be classified? 
-2. Can the country (of the artist) of drawings of a single word be classified?
-3. Taking an exploratory and unsupervised approach, can any other clusters be identified within the drawings of a single word?
+2. Can the country (of the artist) of drawings of a word be classified?
+3. Exploratory + unsupervised: Can any other clusters be identified within the drawings of a single word?
 
 For this project, drawings of the following 10 words were used: beard, birthday cake, face, house, ice cream, rain, sandwich, snowflake, The Mona Lisa, yoga. Further, to reduce complexity, only drawings from Germany (DE), Russia (RU) and the United States (US) were considered. The motivation for choosing these drawings was the amount of data and that all countries are on different continents and have different native languages. 
 
@@ -242,14 +242,17 @@ Images were clustered into 5 clusters using features extracted from VGG16. Plots
 In the future, it should be considered, to explore a range of possible values for k, and rather than sampling images for each cluster, plotting those which are closest to the centroid of each cluster. What these plots indicate, is also that the drawings are very noisy, which might have contributed to the fact that they could not be classified by their country. Further implications are discussed below.
 
 __Clusters for *rain*:__
+
 0: rain as lines - 1: rain as more lines - 2: rain with clouds at the top - 3: rain with bigger clouds - 4: rain with clouds and big drops
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/rain_5_clusters.png)
 
 __Clusters for *snowflake*:__
+
 0: simple line snowflake - 1: snowflake as blob - 2: simple line snowflake at the top - 3: reduced line snowflake - 4: decorated line snowflake
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/snowflake_5_clusters.png)
 
 __Clusters for *yoga*:__
+
 0: cheating with writing - 1: yoga with spread out legs/arms - 2: standing yoga - 3: yoga on mat - 4: cut off drawing
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/yoga_5_clusters.png)
 

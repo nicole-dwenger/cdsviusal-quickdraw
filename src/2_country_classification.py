@@ -53,7 +53,6 @@ from tensorflow.keras.optimizers import Adam
 
 # MAIN FUNCTION -----------------------------------------------
 
-
 def main():
     
     # --- ARGUMENT PARSER ---

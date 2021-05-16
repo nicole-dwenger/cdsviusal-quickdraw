@@ -40,7 +40,6 @@ from tensorflow.keras.applications.vgg16 import VGG16
 
 # MAIN FUNCTION -----------------------------------------------
 
-
 def main():
     
     # --- ARGUMENT PARSER AND OUTPUT DIRECTORY ---
@@ -91,7 +90,7 @@ def main():
     # Initialise KMeans algorithm with k clusters, and fit to feature list
     kmeans = KMeans(n_clusters = n_clusters, random_state=22)
     kmeans.fit(feature_list)
-    # Append feature list to dataframe
+    # Append predicted labels to dataframe
     df["cluster_labels"] = kmeans.labels_
     
     # --- OUTPUT ---
