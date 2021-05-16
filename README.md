@@ -12,7 +12,7 @@ The aim of this project was to investigate sketches that were collected by the Q
 2. Can the country (of the artist) of drawings of a word be classified?
 3. Exploratory + unsupervised: Can any other clusters be identified within the drawings of a single word?
 
-For this project, drawings of the following 10 words were used: beard, birthday cake, face, house, ice cream, rain, sandwich, snowflake, The Mona Lisa, yoga. Further, to reduce complexity, only drawings from Germany (DE), Russia (RU) and the United States (US) were considered. The motivation for choosing these drawings was the amount of data and that all countries are on different continents and have different native languages. 
+For this project, drawings of the following 10 words were used: *beard, birthday cake, face, house, ice cream, rain, sandwich, snowflake, The Mona Lisa, yoga*. Further, to reduce complexity, only drawings from Germany (DE), Russia (RU) and the United States (US) were considered. The motivation for choosing these drawings was the amount of data and that all countries are on different continents and have different native languages. 
 
 ## Methods
 ### Data and Preprocessing
@@ -96,7 +96,7 @@ source venv_quickdraw/bin/activate
 The simplified .ndjson drawing files, which were used in this project can be downloaded from [Google](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/simplified;tab=objects?prefix=&forceOnObjectsSortingFiltering=false). In the `data/` repository I have provided files of 3 words, which were small enough to store on GitHub. If you wish to reproduce the results of this project, the reamining .ndjson files should be downloaded and saved in the `data/` directory.  
 
 ### 3. Scripts
-This repository contains three main scripts in the `src/` directory, which all source functions from the utility script `utils/quickdraw_utils.py`. Note, that the scripts `1_word_classification.py`, `2_country_classification.py` and `3_clustering.py` require that raw data was processed with `0_preprocessing.py`. Detailed descriptions how to run each of them are provided below. Example output can be found in the corresponding `out/` directorie in the GitHub repository.
+This repository contains three main scripts in the `src/` directory, which all source functions from the utility script `utils/quickdraw_utils.py`. Note, that the scripts `1_word_classification.py`, `2_country_classification.py` and `3_clustering.py` require that raw data (.ndjson files) were processed with `0_preprocessing.py`. Detailed descriptions how to run each of them are provided below. Example output can be found in the corresponding `out/` directorie in the GitHub repository.
 
 ### 3.0. Preprocessing: 0_preprocessing.py
 The script `0_preprocessing.py` preprocesses .ndjson files stored in the `data/` directory as described above. The script should be called after directing to the `src/` directory:
@@ -234,7 +234,7 @@ All outputs of the country classification can be found in `out/2_country_classif
 | snowflake | 0.39 | 0.46 | 0.36 | 0.40 | 
 | yoga | 0.20 | 0.54 | 0.52 | 0.42 | 
 
-For none of these words it was possible to reliably classify the country of a drawing. Plots of the model history indicated, that many of the models did not improve over epochs. In some cases only the training accuracy started to improve, suggesting that the model was starting to overfit on the training data. For future research, it may be interesting to explore if there are any other clusters in the drawings. Implications and critical reflections are addressed in the discussion below.  
+For none of these words it was possible to reliably classify the country of a drawing. Plots of the model history indicated, that many of the models did not improve over epochs. In some cases only the training accuracy started to improve, suggesting that the model was starting to overfit on the training data. Implications and critical reflections are addressed in the discussion below.  
 
 ### 3. Can any other clusters be identified from drawings belonging to the same word? 
 Images were clustered into 5 clusters using features extracted from VGG16. Plots for all of the 10 words can be found in the `out/3_clustering/` directory. For some words, it is possible to see some differences between clusters (e.g. rain, snowflake, yoga). For other words (e.g. house, ice cream, beard) from simply looking at the examples, it does not seem like clusters can be clearly distinguished. Examples are provided below. 
@@ -258,7 +258,7 @@ __Clusters for *yoga*:__
 
 ### 3. Discussion 
 There are several aspects which should be considered critically in relation to this project: 
-- The words, for which drawings were used in this project may not have been too simple. In other words, if the word is simple, such as *house*, many people might have a very similar representation of it.
+- The words, for which drawings were used in this project may have been too simple. In other words, if the word is simple, such as *house*, many people might have a very similar representation of it.
 - The countries, for which drawings were chosen may not have been different enough in the way they represent words visually.
 - The images were transformed to be on a RGB scale, even though they were grey scale. This did not seem to impede classification of sketches by word. However, it should still be mentioned, that VGG16 is trained on coloured images, and in this project it was pretended that images were coloured, even though they were not. This might have impeded feature extraction. 
 - The sketches are very different from the images of ImageNet, which VGG16 was trained on. Thus, the model might not be fitting for these kind of images. Further, the images were resized, and were not the same size as the ImageNet images, this might also impacted results, as the pre-trained weights in VGG16 were learned on images of 224x224. 
