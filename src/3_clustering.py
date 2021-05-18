@@ -13,10 +13,10 @@ For a preprocessed dataframe of a word (containing 6000 drawings)
 Input:
   - -w, --word, str, required, examples: "yoga", "The_Mona_Lisa" 
     (should correspond to filename in out/0_preprocessed_data/)
-  - -n, --n_clusters, int, optional, default: 5, number of clusters to generate
+  - -k, --k_clusters, int, optional, default: 5, number of clusters to generate
 
 Output saved in ../out/3_clustering/:
-  - {word}_{n_clusters}_clusters.png
+  - {word}_{k_clusters}_clusters.png
 """
 
 # LIBRARIES ---------------------------------------------------
@@ -27,15 +27,86 @@ import argparse
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 # Utils
 import sys
 sys.path.append(os.path.join(".."))
-from utils.quickdraw_utils import npy_to_df, extract_features, save_cluster_drawings
+from utils.quickdraw_utils import npy_to_df
 
 # Kmeans and VGG16
 from sklearn.cluster import KMeans
-from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
+
+
+# HELPER FUNCTIONS --------------------------------------------
+
+def extract_features(image, model):
+    """
+    Extract features for a given image, using pretrained layers of a given model
+    Input:
+      - img: image, size should be as input shape of model
+      - model: loaded, pretrained model, here: vgg16
+    Returns: 
+      - flattened, normalised features of the image
+    """
+    # Turn image into array
+    img = np.array(image)
+    # Expand dimension (1 at the beginning)
+    expanded_img = np.expand_dims(img, axis=0)
+    # Preprocess image, to fit with vgg16
+    preprocessed_img = preprocess_input(expanded_img)
+    # Predict the features using the pretrained model
+    features = model.predict(preprocessed_img)
+    # Flatten the features
+    flattened_features = features.flatten()
+    # Normalise features 
+    normalized_features = flattened_features / np.linalg.norm(features)
+    
+    return normalized_features
+
+def save_cluster_drawings(df, k_clusters, output_path):
+    """
+    Generate one image containing 20 examples of each cluster.
+    Input:
+      - df: dataframe, containg column "img_256", storing images in arrays 
+            and column "cluster_labels", storing corresponding cluster labels
+      - k_clusters: number of k clusters which were extracted
+      - output_path: output path, where image should be stored 
+    """
+    # Create empty lists for images of clusters
+    cluster_images = []
+    # Create empty list for cluster labels of images
+    cluster_labels = []
+
+    # For each cluster of the possible cluster labels:
+    for cluster in set(df["cluster_labels"].tolist()):
+        # Filter only images belonding to the cluster, get the first 20
+        cluster_sample = df[df["cluster_labels"] == cluster][:20]
+        # Append images to the cluster_images list, 256 for better quality
+        cluster_images.extend(cluster_sample["img_256"].tolist())
+        # Append cluser labels of images to the cluster labels list
+        cluster_labels.extend(cluster_sample["cluster_labels"].tolist())
+        
+    # Initialise figure, size adjusted to k_clusters
+    fig = plt.figure(figsize = (25, k_clusters * 2))
+    # Make figure background white
+    fig.patch.set_facecolor('white') 
+    
+    # Define rows and columns of subplots
+    rows, columns = k_clusters, 20
+    
+    # For each image in cluster_images, plot it as a subplot
+    # And append label as title
+    for i in range(1, len(cluster_images) + 1):
+        img = cluster_images[i-1]
+        fig.add_subplot(rows, columns, i)
+        plt.imshow(img)
+        plt.axis("off")
+        plt.title(f"Cluster {cluster_labels[i-1]}")
+        
+    # Save figure in output_path
+    plt.savefig(output_path)
 
 
 # MAIN FUNCTION -----------------------------------------------
@@ -53,14 +124,14 @@ def main():
                     required = True)
     
     # Argument option for k clusters
-    ap.add_argument("-n", "--n_clusters", type = int, 
-                    help = "Number of clusters to extract",
+    ap.add_argument("-k", "--k_clusters", type = int, 
+                    help = "Number of k clusters to extract",
                     required = False, default = 5)
     
     # Extract arguments
     args = vars(ap.parse_args())
     word = args["word"]
-    n_clusters = args["n_clusters"]
+    k_clusters = args["k_clusters"]
     
     # Prepare output directory 
     output_directory = os.path.join("..", "out", "3_clustering")
@@ -70,9 +141,9 @@ def main():
     # --- DATA AND MODEL PREPARATION ---
     
     # Print message
-    print(f"\n[INFO] Initialising VGG16 feature extraction and kmeans clustering of {n_clusters} for {word}.")
+    print(f"\n[INFO] Initialising VGG16 feature extraction and kmeans clustering of {k_clusters} for {word}.")
 
-    # Get path to the file corresponding to the word and load file to cd
+    # Get path to the file corresponding to the word and load file to df
     filepath = os.path.join("..", "out", "0_preprocessed_data", f"{word}.npy")
     df = npy_to_df([filepath], columns = ["word", "country", "img_256", "img_32"])
     
@@ -83,12 +154,13 @@ def main():
 
     # Extract features for each of the images in the dataframe
     feature_list = []
-    for index, row in df.iterrows():
+    for index, row in tqdm(df.iterrows(), total=df.shape[0]):
         features = extract_features(row["img_32"], model)
         feature_list.append(features)
         
-    # Initialise KMeans algorithm with k clusters, and fit to feature list
-    kmeans = KMeans(n_clusters = n_clusters, random_state=22)
+    # Initialise KMeans algorithm with k clusters
+    kmeans = KMeans(n_clusters = k_clusters, random_state=22)
+    # Fit kmeans to feature list
     kmeans.fit(feature_list)
     # Append predicted labels to dataframe
     df["cluster_labels"] = kmeans.labels_
@@ -96,12 +168,12 @@ def main():
     # --- OUTPUT ---
     
     # Define output path for image
-    output_path = os.path.join("..", "out", "3_clustering", f"{word}_{n_clusters}_clusters.png")
+    output_path = os.path.join("..", "out", "3_clustering", f"{word}_{k_clusters}_clusters.png")
     # Generate and save image of 20 examples for each cluster
-    save_cluster_drawings(df, n_clusters, output_path)
+    save_cluster_drawings(df, k_clusters, output_path)
         
     # Print message
-    print(f"[INFO] Done! Image of 20 drawings for {n_clusters} clusters saved in {output_directory} for {word}!\n") 
+    print(f"[INFO] Done! Image of 20 drawings for {k_clusters} clusters saved in {output_directory} for {word}!\n") 
         
 if __name__=="__main__":
     main()

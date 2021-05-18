@@ -205,12 +205,12 @@ __Parameters:__
 - `-w, --word`: *str*, ***required***\
    Word, for which a corresponding .npy file is stored in `out/0_preprocessed_data`. Note, that the word should be written in the same way as it is in the filename, e.g., for a file called The_Mona_Lisa.npy this would be `The_Mona_Lisa`.
    
-- `-n, --n_clusters`: *int, optional, default:* `5`\
-   Number of clusters for kmeans algorithm. 
+- `-k, --k_clusters`: *int, optional, default:* `5`\
+   Number of k clusters for kmeans algorithm. 
   
 
 __Output__ saved in `out/3_clustering/`:
-- `{word}_{n_clusters}_clusters.png`\
+- `{word}_{k_clusters}_clusters.png`\
    Image with 20 examples of each of the clusters. 
 
 ## Results and Discussion
@@ -242,17 +242,14 @@ Images were clustered into 5 clusters using features extracted from VGG16. Plots
 In the future, it should be considered, to explore a range of possible values for k, and rather than sampling images for each cluster, plotting those which are closest to the centroid of each cluster. What these plots indicate, is also that the drawings are very noisy, which might have contributed to the fact that they could not be classified by their country. Further implications are discussed below.
 
 __Clusters for *rain*:__ rain ...
-
 0: ... as lines, 1: ... as more lines, 2: .. with clouds at the top, 3: ... with bigger clouds, 4: ... with clouds and big drops
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/rain_5_clusters.png)
 
 __Clusters for *snowflake*:__ snowflake ...
-
 0: ... as simple lines, 1: ... as blob - 2: ... as lines at the top, 3: ... as fewer lines - 4: ... as decorated lines
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/snowflake_5_clusters.png)
 
 __Clusters for *yoga*:__ 
-
 0: cheating with writing - 1: yoga with spread out legs/arms - 2: standing yoga - 3: yoga on mat - 4: cut off drawing
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/yoga_5_clusters.png)
 

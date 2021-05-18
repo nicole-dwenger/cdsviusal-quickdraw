@@ -36,10 +36,46 @@ import argparse
 import pandas as pd
 import numpy as np
 
-# Util functions
-import sys
-sys.path.append(os.path.join(".."))
-from utils.quickdraw_utils import strokes_to_img
+# Image processing
+import cv2
+
+
+# HELPER FUNCTION --------------------------------------------    
+        
+def strokes_to_img(strokes, output_size):
+    """
+    Turn drawing strokes into image with strokes coloured by time of occuance.
+    Input: 
+      - strokes: List of strokes of quickdraw images
+      - ouput_size: output size of image    
+    Returns:
+      - img: with 3 colour channels, and sized to output size
+    """
+    # Create empty array of original image size (0 = black)
+    img = np.zeros((256, 256, 1), np.uint8)
+    
+    # For each stroke in the drawing
+    for stroke in strokes:
+        # Get all x points and all y points
+        stroke_x = (np.array(stroke[0]))
+        stroke_y = (np.array(stroke[1]))        
+        
+        # For each of the x and y pairs
+        for i in range(len(stroke_x) - 1):
+            # Get x and y coordinates for a point and the following point
+            p1 = (stroke_x[i], stroke_y[i])
+            p2 = (stroke_x[i+1], stroke_y[i+1])
+            # Draw line between the points (255 = white) 
+            img = cv2.line(img, p1, p2, (255), 2)
+    
+    # Invert: background white, drawing black
+    img_grey = cv2.bitwise_not(img)
+    # Convert to have 3 color channels
+    img_rgb = cv2.cvtColor(img_grey, cv2.COLOR_GRAY2RGB)
+    # Resize to 64 for CNN
+    img_sized = cv2.resize(img_rgb, (output_size, output_size), interpolation = cv2.INTER_AREA)
+            
+    return img_sized
 
 
 # MAIN FUNCTION -----------------------------------------------
@@ -107,7 +143,7 @@ def main():
 
     # Print messsage
     print(f"[INFO] All done, output saved in {output_directory}!")
-                                 
+                                
                                                            
 if __name__=="__main__":
     main()

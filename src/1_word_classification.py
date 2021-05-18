@@ -78,8 +78,9 @@ def main():
     
     print("\n[INFO] Initialising classification of words of sketches using the pretrained model VGG16.")
     
-    # Create target dataframe for data, based on preprocessed .npy files
+    # Get filepaths of all preprocessed .npy files
     filepaths = glob.glob(os.path.join("..", "out", "0_preprocessed_data", "*.npy"))
+    # Create target dataframe for data, based on preprocessed .npy files
     df = npy_to_df(filepaths, columns = ["word","country","img_256", "img_32"])
         
     # Preprocess images/drawings [X] and corresponding labels/words [x], and save unique label names (words)
