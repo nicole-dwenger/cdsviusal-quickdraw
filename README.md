@@ -63,7 +63,7 @@ For this unsupervised, exploratory task, pre-trained weights of VGG16 were used 
     |-- 3_clustering.py                # Unsupervised, kmeans clustering of drawings of one word, using feature extraction
 
 |-- utils/                             # Directory containing utility script
-    |-- quickdraw_utils.py             # Script, containing functions sourced throughout the main scripts
+    |-- quickdraw_utils.py             # Script, containing functions sourced across the main scripts
 
 |-- create_venv.sh                     # Bash script to create virtual environment, venv_quickdraw
 |-- requirements.txt                   # Necessary dependencies to run script
@@ -96,7 +96,7 @@ source venv_quickdraw/bin/activate
 The simplified .ndjson drawing files, which were used in this project can be downloaded from [Google](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/simplified;tab=objects?prefix=&forceOnObjectsSortingFiltering=false). In the `data/` repository I have provided files of 3 words, which were small enough to store on GitHub. If you wish to reproduce the results of this project, the reamining .ndjson files should be downloaded and saved in the `data/` directory.  
 
 ### 3. Scripts
-This repository contains three main scripts in the `src/` directory, which all source functions from the utility script `utils/quickdraw_utils.py`. Note, that the scripts `1_word_classification.py`, `2_country_classification.py` and `3_clustering.py` require that raw data (.ndjson files) were processed with `0_preprocessing.py`. Detailed descriptions how to run each of them are provided below. Example output can be found in the corresponding `out/` directorie in the GitHub repository.
+This repository contains three main scripts in the `src/` directory, some of which also source functions from the utility script `utils/quickdraw_utils.py`. Note, that the scripts `1_word_classification.py`, `2_country_classification.py` and `3_clustering.py` require that raw data (.ndjson files) were processed with `0_preprocessing.py`. Detailed descriptions how to run each of them are provided below. Example output can be found in the corresponding `out/` directorie in the GitHub repository.
 
 ### 3.0. Preprocessing: 0_preprocessing.py
 The script `0_preprocessing.py` preprocesses .ndjson files stored in the `data/` directory as described above. The script should be called after directing to the `src/` directory:
