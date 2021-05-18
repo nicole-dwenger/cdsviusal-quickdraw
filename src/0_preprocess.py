@@ -72,7 +72,7 @@ def strokes_to_img(strokes, output_size):
     img_grey = cv2.bitwise_not(img)
     # Convert to have 3 color channels
     img_rgb = cv2.cvtColor(img_grey, cv2.COLOR_GRAY2RGB)
-    # Resize to 64 for CNN
+    # Resize to output size
     img_sized = cv2.resize(img_rgb, (output_size, output_size), interpolation = cv2.INTER_AREA)
             
     return img_sized
