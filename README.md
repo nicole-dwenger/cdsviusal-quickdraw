@@ -31,16 +31,16 @@ Thus, in total 60.000 drawings were preprocessed, 6.000 for each of the 10 categ
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/assets/examples.png)
 
 ### Transfer Learning 
-For this project, the method of transfer learning was applied. Specifically, pre-trained layers of the model VGG16 were used, while fully connected layers at the end (or in tensorflow-terms *at the top*) were removed and substituted with layers fitting to the data used in this project. Transfer learning is useful, as the model (here VGG16) has been trained on a large collection of images and learned to see, meaning to extract features from images. Thus, only the fully connected layers at the end are being trained, reducing processing time and required amount of data. 
+For this project, the method of transfer learning was applied. Specifically, pre-trained layers of the model VGG16 were used, while fully connected layers at the end (or in tensorflow-terms *at the top*) were removed and substituted with layers fitting to the data used in this project. Transfer learning is useful, as the model (here VGG16) has been trained on a large collection of images and learned to *see*, meaning to extract features from images. Thus, only the fully connected layers at the end are being trained, reducing processing time and required amount of data. 
 
 #### 1. Can the word that was presented in relation to the drawing be classified? 
 For this classification task, all 60.000 preprocessed drawing of size 32x32 or the 10 words were normalised using min-max-regularisation and split into train and test images using an 80/20 split. To the pre-trained layers of VGG16, a flattening layer, dense layer with 256 nodes and an output layer to classify the 10 words were appended. As optimiser Adam was used with a learning rate of 0.001 and the model was trained for 5 epochs using batch size of 40. 
 
 #### 2. Can the country of a drawings belonging to a single word be classified? 
-For this classification task, drawings of one word were considered at a time. Thus, 10 models were trained on a total of 6.000 images (2000 for each country). These images were of size 32x32x3, regularised with min-max-regularisation and split into test and training data using an 80/20 split. To the pre-trained layers of VGG16 a flattening layer, dense layer with 256 nodes, a drop out layer with a drop out rate of 0.02 to avoid overfitting and an output layer to classify the 3 countries were appended. As optimiser Adam was used with a learning rate of 0.001 and each model was trained for 20 epochs using batch size of 40. Different batch sizes and epochs were explored, but led to increased overfitting. 
+For this classification task, drawings of one word were considered at a time. Thus, 10 models were trained on a total of 6.000 images (2000 for each country). These images were of size 32x32x3, regularised with min-max-regularisation and split into test and training data using an 80/20 split. To the pre-trained layers of VGG16 a flattening layer, dense layer with 256 nodes, a drop out layer with a drop out rate of 0.02 to avoid overfitting and an output layer to classify the 3 countries were appended. As optimiser Adam was used with a learning rate of 0.001 and each model was trained for 20 epochs using batch size of 40. Different batch sizes and epochs were explored, but increased overfitting. 
 
 #### 3. Can any other clusters be identified within the drawings of a word? 
-For this unsupervised, exploratory task, pre-trained weights of VGG16 were used to extract dense feature representations (of size 512) for each of the drawings belonging to one word. These dense feature representations were normalised and fed into a K-Means clustering algorithm. For all words, k was defined to be 5. Note, that this value was not an informed choice but rather based on intuition. Using the cluster labels assigned to each image, 20 images were sampled for each cluster, plotted and saved as ann image.
+For this unsupervised, exploratory task, pre-trained weights of VGG16 were used to extract dense feature representations (of size 512) for each of the drawings belonging to one word. These dense feature representations were normalised and fed into a K-Means clustering algorithm. For all words, k was defined to be 5. Note, that this value was not an informed choice but rather based on intuition. Using the cluster labels assigned to each image, 20 images were sampled for each cluster, plotted and saved as an image.
 
 
 ## Repository Structure
@@ -93,10 +93,10 @@ source venv_quickdraw/bin/activate
 ```
 
 ### 2. Data
-The simplified .ndjson drawing files, which were used in this project can be downloaded from [Google](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/simplified;tab=objects?prefix=&forceOnObjectsSortingFiltering=false). In the `data/` repository I have provided files of 3 words, which were small enough to store on GitHub. If you wish to reproduce the results of this project, the reamining .ndjson files should be downloaded and saved in the `data/` directory.  
+The simplified .ndjson drawing files, which were used in this project can be downloaded from [Google](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/simplified;tab=objects?prefix=&forceOnObjectsSortingFiltering=false). In the `data/` repository I have provided files of 3 words, which were small enough to store on GitHub. If you wish to reproduce all results of this project, the reamining .ndjson files should be downloaded and saved in the `data/` directory.  
 
 ### 3. Scripts
-This repository contains three main scripts in the `src/` directory, some of which also source functions from the utility script `utils/quickdraw_utils.py`. Note, that the scripts `1_word_classification.py`, `2_country_classification.py` and `3_clustering.py` require that raw data (.ndjson files) were processed with `0_preprocessing.py`. Detailed descriptions how to run each of them are provided below. Example output can be found in the corresponding `out/` directorie in the GitHub repository.
+This repository contains three main scripts in the `src/` directory, some of which also source functions from the utility script `utils/quickdraw_utils.py`. Note, that the scripts `1_word_classification.py`, `2_country_classification.py` and `3_clustering.py` require that raw data (.ndjson files) were processed with `0_preprocessing.py`. Detailed descriptions how to run each of them are provided below. Example output can be found in the corresponding `out/` directories.
 
 ### 3.0. Preprocessing: 0_preprocessing.py
 The script `0_preprocessing.py` preprocesses .ndjson files stored in the `data/` directory as described above. The script should be called after directing to the `src/` directory:
@@ -114,7 +114,7 @@ python3 0_preprocessing.py -w ALL
 
 __Parameters:__
 - `-w, --word`: *str*, ***required***\
-   Word, for which a corresponding .ndjson file is stored in `data/`. Note, that the word should be written in the same way as it is in the filename, e.g., for The Mona Lisa this would be `The Mona Lisa`. Use `ALL`, if all files should be processed at once. 
+   Word, for which a corresponding .ndjson file is stored in `data/`. Note, that the word should be written in the same way as it is in the filename, e.g., for `full-simplified-The Mona Lisa.ndjson` this would be `The Mona Lisa`. Use `ALL`, if all files should be processed at once. 
 
 __Output__ saved in `out/0_preprocessing/`:
 - `{word}.npy`\
@@ -219,7 +219,7 @@ __Output__ saved in `out/3_clustering/`:
 The model, which was trained to classify drawings as belonging to one of the 10 words reached an F1 score of 0.92. The model history plot indicates, that already from the first epoch, the model achieved a quite high training and validation accuracy and did not improve much over the 5 epochs.  
 
 ### 2. Can the country that the artist of a drawing for a single word be classified? 
-All outputs of the country classification can be found in `out/2_country_classification/` directory of the Github repository. The following F1 scores were achieved when training a model to classify the country (DE, RU, US) within drawings belonging to one of the 10 words: 
+All outputs of the country classification can be found in `out/2_country_classification/` directory. The following F1 scores were achieved when training a model to classify the country (DE, RU, US) within drawings belonging to one of the 10 words: 
 
 | word | DE F1 | RU F1 | US F1 | weighted overall F1 
 |--|--|--|--|--|
