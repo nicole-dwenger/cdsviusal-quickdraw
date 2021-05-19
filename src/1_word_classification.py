@@ -83,7 +83,7 @@ def main():
     # Create target dataframe for data, based on preprocessed .npy files
     df = npy_to_df(filepaths, columns = ["word","country","img_256", "img_32"])
         
-    # Preprocess images/drawings [X] and corresponding labels/words [x], and save unique label names (words)
+    # Preprocess images/drawings [X] and corresponding labels/words [y], and save unique label names (words)
     # This scales images, binarizes labels and also returns the sorted, unique label names
     X_train, X_test, y_train, y_test, label_names = prepare_data(df, "img_32", "word")
     # Retrieve number of labels (words), for output layer in model
@@ -132,6 +132,11 @@ def main():
                                    predictions.argmax(axis=1), 
                                    target_names=label_names)
     
+    # Print classification report
+    print(f"[OUTPUT] Classification report:\n{report}")
+    
+    # --- OUTPUT ---
+    
     # Prepare output directory
     output_directory = os.path.join("..", "out", "1_word_classification")
     if not os.path.exists(output_directory):
@@ -141,10 +146,6 @@ def main():
     save_model_info(model, output_directory, "model_summary.txt", "model_plot.png")
     save_model_history(history, epochs, output_directory, "model_history.png")
     save_model_report(report, epochs, batch_size, output_directory, "model_report.txt")
-    
-    # Print classification report
-    print(f"[OUTPUT] Classification report for model:\n")
-    print(report)
     
     # Print message
     print(f"\n[INFO] All done! Output is saved in {output_directory}.")

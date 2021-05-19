@@ -82,11 +82,20 @@ def strokes_to_img(strokes, output_size):
 
 def main():
     
+    # --- ARGUMENT PARSER AND OUTPUT DIRECTORY ---
+    
     # Argument parser for word input
     ap = argparse.ArgumentParser()
     ap.add_argument("-w", "--word", type = str, required = True)
     args = vars(ap.parse_args())
     word = args["word"]
+    
+    # Prepare output directory
+    output_directory = os.path.join("..", "out", "0_preprocessed_data")
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+        
+    # --- GET FILEPATHS ---
     
     # Print messsage
     print(f"\n[INFO] Initializing preprocessing of {word}!")
@@ -95,7 +104,9 @@ def main():
     if (word == "ALL"):
         path_list = glob.glob(os.path.join("..", "data", "*.ndjson"))
     else: 
-        path_list = [os.path.join("..", "data", f"full-simplified-{word}.ndjson")]
+        path_list = [os.path.join("..", "data", f"full-simplified-{word}.ndjson")]      
+        
+    # --- PREPROCESS DATA ---
         
     # For each path in the list
     for path in tqdm(path_list):
@@ -131,11 +142,6 @@ def main():
                                         "country": country,
                                         "img_256": np.array(img_256),
                                         "img_32": np.array(img_32)}, ignore_index=True)
-                
-        # Prepare out directory
-        output_directory = os.path.join("..", "out", "0_preprocessed_data")
-        if not os.path.exists(output_directory):
-            os.makedirs(output_directory)
 
         # Save out dataframe in output directory dataframe as .npy 
         out_path = os.path.join(output_directory, f"{pretty_word}.npy")

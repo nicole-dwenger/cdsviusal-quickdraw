@@ -113,7 +113,7 @@ def save_cluster_drawings(df, k_clusters, output_path):
 
 def main():
     
-    # --- ARGUMENT PARSER AND OUTPUT DIRECTORY ---
+    # --- ARGUMENT PARSER ---
     
     # Initialise argument parser
     ap = argparse.ArgumentParser()
@@ -132,13 +132,8 @@ def main():
     args = vars(ap.parse_args())
     word = args["word"]
     k_clusters = args["k_clusters"]
-    
-    # Prepare output directory 
-    output_directory = os.path.join("..", "out", "3_clustering")
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
         
-    # --- DATA AND MODEL PREPARATION ---
+    # --- DATA PREPERATION ---
     
     # Print message
     print(f"\n[INFO] Initialising VGG16 feature extraction and kmeans clustering of {k_clusters} for {word}.")
@@ -147,10 +142,10 @@ def main():
     filepath = os.path.join("..", "out", "0_preprocessed_data", f"{word}.npy")
     df = npy_to_df([filepath], columns = ["word", "country", "img_256", "img_32"])
     
+    # --- FEATURE EXTRACTION AND CLUSTERING ---
+    
     # Load VGG16, without top layers and input size corresponding to images
     model = VGG16(weights='imagenet', include_top=False, pooling='avg', input_shape=(32, 32, 3))
-    
-    # --- FEATURE EXTRACTION AND CLUSTERING ---
 
     # Extract features for each of the images in the dataframe
     feature_list = []
@@ -166,6 +161,11 @@ def main():
     df["cluster_labels"] = kmeans.labels_
     
     # --- OUTPUT ---
+    
+    # Prepare output directory 
+    output_directory = os.path.join("..", "out", "3_clustering")
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
     
     # Define output path for image
     output_path = os.path.join("..", "out", "3_clustering", f"{word}_{k_clusters}_clusters.png")
