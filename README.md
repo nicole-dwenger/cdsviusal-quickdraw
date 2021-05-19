@@ -240,15 +240,15 @@ Images were clustered into 5 clusters using features extracted from VGG16. Plots
 
 In the future, it should be considered, to explore a range of possible values for k. Further, instead of sampling images for each cluster, those which are closest to the centroid of each cluster could be plotted. Nevertheless, what these plots also indicate is also that the drawings are noisy and not always centred in the image, which might have contributed to the fact that they could not be classified by their country. Further implications are discussed below.
 
-__Clusters for *rain*:__ rain ...
+__Clusters for *rain*:__ rain ...\
 0: ... as lines, 1: ... as more lines, 2: .. with clouds at the top, 3: ... with bigger clouds, 4: ... with clouds and big drops
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/rain_5_clusters.png)
 
-__Clusters for *snowflake*:__ snowflake ...
+__Clusters for *snowflake*:__ snowflake ...\
 0: ... as simple lines, 1: ... as blob - 2: ... as lines at the top, 3: ... as fewer lines - 4: ... as decorated lines
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/snowflake_5_clusters.png)
 
-__Clusters for *yoga*:__ 
+__Clusters for *yoga*:__\
 0: cheating with writing - 1: yoga with spread out legs/arms - 2: standing yoga - 3: yoga on mat - 4: cut off drawing
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/yoga_5_clusters.png)
 
