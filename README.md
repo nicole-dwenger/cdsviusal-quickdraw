@@ -1,6 +1,6 @@
 # QuickDraw! - Culture in Sketches
 
-[Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion)
+[Description](#description) | [Methods](#methods) | [Repository Structure](#repository-structure) | [Usage](#usage) | [Results and Disucssion](#results-and-discussion) | [Contact](#contact)
 
 ## Description
 >This project is the self-assigned project of the course Visual Analytics. 
@@ -235,11 +235,10 @@ All outputs of the country classification can be found in `out/2_country_classif
 | yoga | 0.20 | 0.54 | 0.52 | 0.42 | 
 
 For none of these words it was possible to reliably classify the country of a drawing. Plots of the model history indicated, that many of the models did not improve over epochs. In some cases only the training accuracy started to improve, suggesting that the model was starting to overfit on the training data. Implications and critical reflections are addressed in the discussion below.  
-
 ### 3. Can any other clusters be identified from drawings belonging to the same word? 
 Images were clustered into 5 clusters using features extracted from VGG16. Plots for all of the 10 words can be found in the `out/3_clustering/` directory. For some words, it is possible to see some differences between clusters (e.g. rain, snowflake, yoga). For other words (e.g. house, ice cream, beard) from simply looking at the examples, it does not seem like clusters can be clearly distinguished. Examples are provided below. 
 
-In the future, it should be considered, to explore a range of possible values for k, and rather than sampling images for each cluster, plotting those which are closest to the centroid of each cluster. What these plots indicate, is also that the drawings are very noisy, which might have contributed to the fact that they could not be classified by their country. Further implications are discussed below.
+In the future, it should be considered, to explore a range of possible values for k. Further, instead of sampling images for each cluster, those which are closest to the centroid of each cluster could be plotted. Nevertheless, what these plots also indicate is also that the drawings are noisy and not always centred in the image, which might have contributed to the fact that they could not be classified by their country. Further implications are discussed below.
 
 __Clusters for *rain*:__ rain ...
 0: ... as lines, 1: ... as more lines, 2: .. with clouds at the top, 3: ... with bigger clouds, 4: ... with clouds and big drops
@@ -254,9 +253,9 @@ __Clusters for *yoga*:__
 ![](https://github.com/nicole-dwenger/cdsviusal-quickdraw/blob/master/out/3_clustering/yoga_5_clusters.png)
 
 ### 3. Discussion 
-There are several aspects which should be considered critically in relation to this project: 
-- The words, for which drawings were used in this project may have been too simple. In other words, if the word is simple, such as *house*, many people might have a very similar representation of it.
-- The countries, for which drawings were chosen may not have been different enough in the way they represent words visually.
-- The images were transformed to be on a RGB scale, even though they were grey scale. This did not seem to impede classification of sketches by word. However, it should still be mentioned, that VGG16 is trained on coloured images, and in this project it was pretended that images were coloured, even though they were not. This might have impeded feature extraction. 
-- The sketches are very different from the images of ImageNet, which VGG16 was trained on. Thus, the model might not be fitting for these kind of images. Further, the images were resized, and were not the same size as the ImageNet images, this might also impacted results, as the pre-trained weights in VGG16 were learned on images of 224x224. 
-- There are some general issues with the QuickDraw data. For instance, the users were stropped from drawing as soon as the classifier from Google recognized the sketch. Thus, the sketches may be incomplete and inaccurate representations. Further, the sketches were drawn on a computer. This may make drawings more messy and induce noise in the data. 
+There are several aspects which should be considered critically in relation to this project. First, the words, for which drawings were used in this project may have been too simple. In other words, if the word is simple, such as *house*, many people may have a very similar representation of it, making it difficult to distinguish between countries. Similarly, the countries, for which drawings were chosen may not have been different enough in the way they represent words visually.
+Further, the images were transformed to be on RGB scale, even though they were grey scale. This did not seem to impede classification of sketches by word. However, it should still be mentioned, that VGG16 is trained on coloured images, and in this project it was pretended that images were coloured. Additionally, the sketches are very different from the images of ImageNet, which VGG16 was trained on. Thus, the model might not be fitting for the kind of simple sketches used in this project.
+Lastly, there are some general issues with the QuickDraw data. For instance, the users were stropped from drawing as soon as the classifier from Google recognized the sketch. Thus, the sketches may be incomplete and inaccurate representations. Further, the sketches were drawn on a computer. This may make drawings more messy and induce noise in the data.
+
+## Contact
+If you have any questions, feel free to contact me at 201805351@post.au.dk.

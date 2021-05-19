@@ -7,11 +7,11 @@ Script to preprocess QuickDraw data
 - This script converts the strokes of 2000 drawings for the countries US, RU and DE RGB images 
   with black strokes on white background, one in original size (256x256) and reduced size (32x32)
   
-For one of ALL files in the data/ directory:
+For one or ALL files in the data/ directory:
 - Read json file of a word (in filename) or ALL files in directory
 - Keep only the drawings that were recognized 
 - For the countries US, RU and DE:
-    - Sample 2000 drawings for the given country 
+    - Extract 2000 drawings for the given country 
     - Turn strokes into RGB image of original size (256x256)
     - Turn strokes into RGB image of reduced size (32x32)
     - Append word, country code, img_256, img_32 to data frame

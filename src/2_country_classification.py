@@ -7,8 +7,8 @@ single word using transfer learning with VGG16.
 For a preprocessed dataframe of a word (containing 2000 drawings for each country: DE, US, RU)
   - Turn 32x32 imgs to array and normalise = X
   - Turn list of corresponding "country" labels to array, binarize = y
-  - Split X and y into train/test, with 80/20 splot
-  - Prepare VGG16: remove fully connected layers at the top, append flattening, dense and output layer
+  - Split X and y into train/test, with 80/20 split
+  - Prepare VGG16: remove fully connected layers at the top, append flattening, dense, dropout and output layer
   - Train appended layers to classify countries of sketches, with input batch size and epochs
   - Evaluate model by predicting country labels of test data
   - Save model information, model history and classification report
@@ -17,7 +17,7 @@ Input:
   - -w, --word, str, required, word to classify drawings for, 
      corresponding .npy file should be in out/0_preprocessed_data/"
   - -b, --batch_size, int, optional, default: 40, size of batch to train model on within an epoch
-  - -e, --epoch, int, optional, defualt: 20, number of epochs to train model for 
+  - -e, --epoch, int, optional, default: 20, number of epochs to train model for 
 
 Output saved in ../out/2_country_classification/{word}:
   - model_summary.txt: summary of model architecture
