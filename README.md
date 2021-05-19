@@ -8,9 +8,10 @@
 
 The aim of this project was to investigate sketches that were collected by the QuickDraw application from Google. In the [QuickDraw application](https://quickdraw.withgoogle.com), users are prompted with a word and asked to draw the given concept. While drawing, Google’s classification model tries to guess the corresponding word. These quick drawings might provide insights into how people represent words or concepts in a very simple format. Many approaches have been taken to classify the words of drawings. This project aimed to go beyond this classification task, by also taking a cultural approach. Specifically, it was investigated whether it is possible to predict the country a drawing came from. People from different countries might have different representations of e.g beard, sandwich or rain as a consequence of their surrounding and cultural background. Further, an exploratory and unsupervised approach was taken to investigate, whether any other clusters can be identified within the drawings of a word, as people across cultures may have different ways of representing words visually. Thus, the following questions were posed: 
 
-1. Can the word of a drawings be classified? 
-2. Can the country (of the artist) of drawings of a word be classified?
-3. Exploratory + unsupervised: Can any other clusters be identified within the drawings of a single word?
+
+1. Using drawings of different words: can the word of a drawing be classified?
+2. Using drawings of the same word: can the country (of the artist) of a drawing be classified?
+3. Using drawings of the same word and taking an exploratory and unsupervised approach: can any other clusters be identified within the drawings of a word?
 
 For this project, drawings of the following 10 words were used: *beard, birthday cake, face, house, ice cream, rain, sandwich, snowflake, The Mona Lisa, yoga*. Further, to reduce complexity, only drawings from Germany (DE), Russia (RU) and the United States (US) were considered. The motivation for choosing these drawings was the amount of data and that all countries are on different continents and have different native languages. 
 
@@ -33,10 +34,10 @@ Thus, in total 60.000 drawings were preprocessed, 6.000 for each of the 10 categ
 ### Transfer Learning 
 For this project, the method of transfer learning was applied. Specifically, pre-trained layers of the model VGG16 were used, while fully connected layers at the end (or in tensorflow-terms *at the top*) were removed and substituted with layers fitting to the data used in this project. Transfer learning is useful, as the model (here VGG16) has been trained on a large collection of images and learned to *see*, meaning to extract features from images. Thus, only the fully connected layers at the end are being trained, reducing processing time and required amount of data. 
 
-#### 1. Can the word that was presented in relation to the drawing be classified? 
+#### 1. Can the word of a drawing be classified?
 For this classification task, all 60.000 preprocessed drawing of size 32x32 or the 10 words were normalised using min-max-regularisation and split into train and test images using an 80/20 split. To the pre-trained layers of VGG16, a flattening layer, dense layer with 256 nodes and an output layer to classify the 10 words were appended. As optimiser Adam was used with a learning rate of 0.001 and the model was trained for 5 epochs using batch size of 40. 
 
-#### 2. Can the country of a drawings belonging to a single word be classified? 
+#### 2. Can the country of a drawing be classified?
 For this classification task, drawings of one word were considered at a time. Thus, 10 models were trained on a total of 6.000 images (2000 for each country). These images were of size 32x32x3, regularised with min-max-regularisation and split into test and training data using an 80/20 split. To the pre-trained layers of VGG16 a flattening layer, dense layer with 256 nodes, a drop out layer with a drop out rate of 0.02 to avoid overfitting and an output layer to classify the 3 countries were appended. As optimiser Adam was used with a learning rate of 0.001 and each model was trained for 20 epochs using batch size of 40. Different batch sizes and epochs were explored, but increased overfitting. 
 
 #### 3. Can any other clusters be identified within the drawings of a word? 
@@ -215,10 +216,10 @@ __Output__ saved in `out/3_clustering/`:
 
 ## Results and Discussion
 
-### 1. Can the word that was presented in relation to the sketch be classified? 
+### 1. Can the word of a drawing be classified? 
 The model, which was trained to classify drawings as belonging to one of the 10 words reached an F1 score of 0.92. The model history plot indicates, that already from the first epoch, the model achieved a quite high training and validation accuracy and did not improve much over the 5 epochs.  
 
-### 2. Can the country that the artist of a drawing for a single word be classified? 
+### 2. Can the country (of the artist) of a drawing be classified?
 All outputs of the country classification can be found in `out/2_country_classification/` directory. The following F1 scores were achieved when training a model to classify the country (DE, RU, US) within drawings belonging to one of the 10 words: 
 
 | word | DE F1 | RU F1 | US F1 | weighted overall F1 
@@ -235,7 +236,7 @@ All outputs of the country classification can be found in `out/2_country_classif
 | yoga | 0.20 | 0.54 | 0.52 | 0.42 | 
 
 For none of these words it was possible to reliably classify the country of a drawing. Plots of the model history indicated, that many of the models did not improve over epochs. In some cases only the training accuracy started to improve, suggesting that the model was starting to overfit on the training data. Implications and critical reflections are addressed in the discussion below.  
-### 3. Can any other clusters be identified from drawings belonging to the same word? 
+### 3. Can any other clusters be identified within drawings of the same word? 
 Images were clustered into 5 clusters using features extracted from VGG16. Plots for all of the 10 words can be found in the `out/3_clustering/` directory. For some words, it is possible to see some differences between clusters (e.g. rain, snowflake, yoga). For other words (e.g. house, ice cream, beard) from simply looking at the examples, it does not seem like clusters can be clearly distinguished. Examples are provided below. 
 
 In the future, it should be considered, to explore a range of possible values for k. Further, instead of sampling images for each cluster, those which are closest to the centroid of each cluster could be plotted. Nevertheless, what these plots also indicate is also that the drawings are noisy and not always centred in the image, which might have contributed to the fact that they could not be classified by their country. Further implications are discussed below.
