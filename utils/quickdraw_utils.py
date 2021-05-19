@@ -93,7 +93,7 @@ def unique_path(filepath):
     """
     Create unique filename by enumerating if path exists already 
     Input:
-      - desired fielpath
+      - filepath: desired fielpath
     Returns:
       - filpath, enumerated if it exists already
     """ 
