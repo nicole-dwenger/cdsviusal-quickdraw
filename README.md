@@ -93,7 +93,7 @@ bash create_venv.sh
 source venv_quickdraw/bin/activate
 ```
 
-If you run into any issues with install packages from the `requirements.txt`, you can also manually install packages in the activated virtual environment using the following commands:
+If you run into any issues with install packages from the `requirements.txt`, you can also manually install/uninstall packages in the activated virtual environment using the following commands:
 
 ```bash
 # example: install tensorflow
