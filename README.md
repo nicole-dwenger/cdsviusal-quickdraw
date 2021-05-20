@@ -93,16 +93,6 @@ bash create_venv.sh
 source venv_quickdraw/bin/activate
 ```
 
-If you run into any issues with install packages from the `requirements.txt`, you can also manually install/uninstall packages in the activated virtual environment using the following commands:
-
-```bash
-# example: install tensorflow
-pip install tensorflow
-
-# example: uninstall tensorflow
-pip uninstall tensorflow
-```
-
 ### 2. Data
 The simplified .ndjson drawing files, which were used in this project can be downloaded from [Google](https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/simplified;tab=objects?prefix=&forceOnObjectsSortingFiltering=false). In the `data/` repository I have provided files of 3 words, which were small enough to store on GitHub. If you wish to reproduce all results of this project, the reamining .ndjson files should be downloaded and saved in the `data/` directory.  
 
